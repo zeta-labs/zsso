@@ -9,14 +9,14 @@ var app = express();
 app.oauth = new OAuthServer({
   // See https://github.com/thomseddon/node-oauth2-server for specification
   debug: true,
-  grants: ['password'],
+  grants: ['authorization_code','password'],
   model: model
 });
 
-// console.log(util.inspect(app.oauth, false, null));
-
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: false }));
+// console.log(util.inspect(app.oauth.model));
+console.log(app.oauth.server.options.model);
+// app.use(bodyparser.json());
+// app.use(bodyparser.urlencoded({ extended: false }));
 
 app.get('/secret', app.oauth.authorize(), function(req, res) {
   // Will require a valid access_token.
